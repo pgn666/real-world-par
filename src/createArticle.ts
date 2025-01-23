@@ -1,6 +1,6 @@
 import {inMemoryArticleRepository} from "./inMemoryArticleRepository";
 import {IdGenerator} from "./idGenerator";
-import {Article} from "./article";
+import {Article, ArticleRepository} from "./article";
 import makeSlug from "slug";
 
 export type ArticleInput = {
@@ -12,7 +12,7 @@ export type ArticleInput = {
 // use case/workflow/application service/application logic
 export const createArticle =
     (
-        articleRepository: ReturnType<typeof inMemoryArticleRepository>,
+        articleRepository: ArticleRepository,
         articleIdGenerator: IdGenerator
     ) =>
         async (input: ArticleInput) => {
@@ -30,3 +30,4 @@ export const createArticle =
             await articleRepository.create(article);
             return article;
         };
+
