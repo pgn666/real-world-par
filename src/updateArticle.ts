@@ -19,6 +19,3 @@ export const updateArticle =
             await articleRepository.update(article);
             return article;
         };
-
-docker run -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=user -e POSTGRES_DB=conduit
---name conduit -d -p 5432:5432 postgres
