@@ -1,6 +1,6 @@
 import express, { ErrorRequestHandler } from "express";
 import cors from "cors";
-import { errorHandler, NotFoundError, notFoundHandler } from "./NotFoundError";
+import { errorHandler, NotFoundError, notFoundHandler } from "./errorHandlers";
 import { articleRouter } from "./articleRouter";
 
 export const app = express();

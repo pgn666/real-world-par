@@ -4,7 +4,7 @@ import makeSlug from "slug";
 import omit from "lodash.omit";
 import merge from "lodash.merge";
 import { incrementIdGenerator } from "./incrementIdGenerator";
-import { NotFoundError } from "./NotFoundError";
+import { NotFoundError } from "./errorHandlers";
 import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
 import { createArticle } from "./createArticle";
 
