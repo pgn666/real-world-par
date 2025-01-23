@@ -9,13 +9,6 @@ export type Article = {
   updatedAt: Date;
 };
 
-export type ArticleInput = {
-  body: string;
-  description: string;
-  tagList: Array<string>;
-  title: string;
-};
-
 export type ArticleRepository = {
   create: (art: Article) => void;
   findBySlug: (slug: string) => Article | null;

@@ -1,5 +1,6 @@
 import slug from "slug";
-import { Article, ArticleInput, ArticleRepository } from "./article";
+import { Article, ArticleRepository } from "./article";
+import { ArticleInput } from "./parseArticleInput";
 
 type IdGenerator = () => string;
 
