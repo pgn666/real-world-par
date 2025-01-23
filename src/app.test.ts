@@ -85,14 +85,14 @@ describe("Conduit", function () {
       }
     );
 
-    // const failedArticle = await createArticle(
-    //   request,
-    //   // @ts-ignore
-    //   {
-    //     title: "",
-    //   },
-    //   422
-    // );
-    // assert.deepStrictEqual(failedArticle.body.errors.length, 4);
+    const failedArticle = await createArticle(
+      request,
+      // @ts-ignore
+      {
+        title: "",
+      },
+      422
+    );
+    assert.deepStrictEqual(failedArticle.body.errors.length, 4);
   });
 });

@@ -7,6 +7,7 @@ import { incrementIdGenerator } from "./incrementIdGenerator";
 import { NotFoundError } from "./errorHandlers";
 import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
 import { createArticle } from "./createArticle";
+import { ArticleInputSchema } from "./parseArticleInput";
 
 export const articleRouter = express();
 
@@ -15,7 +16,7 @@ const articleRepository = inMemoryArticleRepository();
 
 articleRouter.post("/api/articles", async (req, res, next) => {
   // HTTP
-  const input = req.body.article;
+  const input = ArticleInputSchema.parse(req.body.article);
 
   // Article Service
   const article = await createArticle(
