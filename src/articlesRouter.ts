@@ -6,6 +6,7 @@ import {incrementIdGenerator} from "./incrementIdGenerator";
 import {Router} from "express";
 import {Article} from "./article";
 import {inMemoryArticleRepository} from "./inMemoryArticleRepository";
+import {createArticle} from "./createArticle";
 
 const articleIdGenerator = incrementIdGenerator(String);
 const articleRepository = inMemoryArticleRepository();
@@ -16,18 +17,7 @@ articlesRouter.post("/api/articles", async (req, res, next) => {
     // HTTP
     const input = req.body.article;
     // TS
-    const now = new Date();
-    const article: Article = {
-        body: input.body,
-        description: input.description,
-        tagList: input.tagList,
-        title: input.title,
-        slug: makeSlug(input.title),
-        id: articleIdGenerator(),
-        createdAt: now,
-        updatedAt: now,
-    };
-    await articleRepository.create(article);
+    const article = await createArticle(articleRepository, articleIdGenerator)(input);
     // HTTP
     res.json({ article: omit(article, "id") });
 });
