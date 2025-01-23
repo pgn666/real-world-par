@@ -2,8 +2,7 @@ import {Article} from "./article";
 
 export const inMemoryArticleRepository = () => {
     const articles: Record<string, Article> = {};
-    // const articles: {[key: string]: Article} = {};
-    // const articles: Array<Article> = [];
+
     return {
         async create(article: Article): Promise<void> {
             articles[article.id] = article;
@@ -19,3 +18,4 @@ export const inMemoryArticleRepository = () => {
         },
     };
 };
+

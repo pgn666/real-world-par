@@ -13,7 +13,9 @@ const articleRepository = inMemoryArticleRepository();
 export const articlesRouter = Router();
 
 articlesRouter.post("/api/articles", async (req, res, next) => {
+    // HTTP
     const input = req.body.article;
+    // TS
     const now = new Date();
     const article: Article = {
         body: input.body,
@@ -26,6 +28,7 @@ articlesRouter.post("/api/articles", async (req, res, next) => {
         updatedAt: now,
     };
     await articleRepository.create(article);
+    // HTTP
     res.json({ article: omit(article, "id") });
 });
 articlesRouter.put("/api/articles/:slug", async (req, res, next) => {
