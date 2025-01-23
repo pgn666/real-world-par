@@ -1,8 +1,5 @@
 import express from "express";
-
-import makeSlug from "slug";
 import omit from "lodash.omit";
-import merge from "lodash.merge";
 import { incrementIdGenerator } from "./incrementIdGenerator";
 import { NotFoundError } from "./errorHandlers";
 import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
@@ -32,12 +29,13 @@ articleRouter.post("/api/articles", async (req, res, next) => {
 
 articleRouter.put("/api/articles/:slug", async (req, res, next) => {
   const input = ArticleInputSchema.parse(req.body.article);
+  const slug = req.params.slug;
 
   // Article Service
-  const article = await updateArticle(
-    articleRepository,
-    () => new Date()
-  )(input);
+  const article = await updateArticle(articleRepository, () => new Date())(
+    slug,
+    input
+  );
 
   // HTTP
   res.json({ article: omit(article, "id") });
