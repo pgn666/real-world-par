@@ -5,19 +5,10 @@ import omit from "lodash.omit";
 import merge from "lodash.merge";
 import { incrementIdGenerator } from "./incrementIdGenerator";
 import { NotFoundError } from "./NotFoundError";
+import { Article } from "./article";
 
 export const articleRouter = express();
 
-type Article = {
-  body: string;
-  description: string;
-  tagList: Array<string>;
-  title: string;
-  slug: string;
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
 const articleIdGenerator = incrementIdGenerator(String);
 const articles: Record<string, Article> = {};
 
