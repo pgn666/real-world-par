@@ -7,7 +7,9 @@ describe("Create article", function () {
     it("happy path", async function () {
         const articleRepository = inMemoryArticleRepository();
         const idGenerator = () => "articleId";
-        const create = createArticle(articleRepository, idGenerator);
+        const DATE = new Date(2010, 10, 10);
+        const clock = () => DATE;
+        const create = createArticle(articleRepository, idGenerator, clock);
 
         const article = await create(
             {

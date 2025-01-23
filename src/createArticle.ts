@@ -2,21 +2,18 @@ import {inMemoryArticleRepository} from "./inMemoryArticleRepository";
 import {IdGenerator} from "./idGenerator";
 import {Article, ArticleRepository} from "./article";
 import makeSlug from "slug";
+import {Clock} from "./clock";
+import {ArticleInput} from "./parseArticleInput";
 
-export type ArticleInput = {
-    body: string;
-    description: string;
-    tagList: string[];
-    title: string;
-};
 // use case/workflow/application service/application logic
 export const createArticle =
     (
         articleRepository: ArticleRepository,
-        articleIdGenerator: IdGenerator
+        articleIdGenerator: IdGenerator,
+        clock: Clock
     ) =>
         async (input: ArticleInput) => {
-            const now = new Date();
+            const now = clock();
             const article: Article = {
                 body: input.body,
                 description: input.description,
