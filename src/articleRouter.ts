@@ -20,7 +20,8 @@ articleRouter.post("/api/articles", async (req, res, next) => {
   // Article Service
   const article = await createArticle(
     articleRepository,
-    articleIdGenerator
+    articleIdGenerator,
+    () => new Date()
   )(input);
 
   // HTTP

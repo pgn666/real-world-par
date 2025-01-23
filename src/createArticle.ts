@@ -5,12 +5,13 @@ type IdGenerator = () => string;
 
 export function createArticle(
   articleRepository: ArticleRepository,
-  articleIdGenerator: IdGenerator
+  articleIdGenerator: IdGenerator,
+  clock: () => Date
 ) {
   const makeSlug = (title: string) => slug(title);
 
   return (input: ArticleInput) => {
-    const now = new Date();
+    const now = clock();
     const article: Article = {
       body: input.body,
       description: input.description,

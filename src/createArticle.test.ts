@@ -4,10 +4,15 @@ import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
 import omit from "lodash.omit";
 
 describe("Create article", function () {
+  const mockedNow = new Date();
   it("happy path", async function () {
     const articleRepository = inMemoryArticleRepository();
     const idGenerator = () => "articleId";
-    const create = createArticle(articleRepository, idGenerator);
+    const create = createArticle(
+      articleRepository,
+      idGenerator,
+      () => mockedNow
+    );
 
     const article = await create({
       title: "The title",
@@ -18,13 +23,15 @@ describe("Create article", function () {
 
     const fetchedArticle = await articleRepository.findBySlug(article.slug);
 
-    assert.deepStrictEqual(omit(fetchedArticle, "createdAt", "updatedAt"), {
+    assert.deepStrictEqual(fetchedArticle, {
       body: "body",
+      createdAt: mockedNow,
       description: "",
       id: "articleId",
       slug: "the-title",
       tagList: ["tag1", "tag2"],
       title: "The title",
+      updatedAt: mockedNow,
     });
   });
 });
