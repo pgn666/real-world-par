@@ -6,11 +6,12 @@ import merge from "lodash.merge";
 import { incrementIdGenerator } from "./incrementIdGenerator";
 import { NotFoundError } from "./NotFoundError";
 import { Article } from "./article";
+import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
 
 export const articleRouter = express();
 
 const articleIdGenerator = incrementIdGenerator(String);
-const articles: Record<string, Article> = {};
+const articleRepository = inMemoryArticleRepository();
 
 articleRouter.post("/api/articles", async (req, res, next) => {
   const input = req.body.article;
@@ -26,7 +27,7 @@ articleRouter.post("/api/articles", async (req, res, next) => {
     createdAt: now,
     updatedAt: now,
   };
-  articles[article.id] = article;
+  articleRepository.create(article);
 
   res.json({ article: omit(article, "id") });
 });
@@ -34,9 +35,7 @@ articleRouter.post("/api/articles", async (req, res, next) => {
 articleRouter.put("/api/articles/:slug", async (req, res, next) => {
   const articleInput = req.body.article;
   const slug = req.params.slug;
-  const existingArticle = Object.values(articles).find(
-    (article) => article.slug === slug
-  );
+  const existingArticle = articleRepository.findBySlug(slug);
   if (!existingArticle) {
     throw new NotFoundError(`Article with slug ${slug} does not exist`);
   }
@@ -45,16 +44,14 @@ articleRouter.put("/api/articles/:slug", async (req, res, next) => {
   article.updatedAt = now;
   article.slug = makeSlug(article.title);
 
-  articles[article.id] = article;
+  articleRepository.update(article);
   res.json({ article: omit(article, "id") });
 });
 
 articleRouter.get("/api/articles/:slug", async (req, res, next) => {
   const slug = req.params.slug;
 
-  const existingArticle = Object.values(articles).find(
-    (article) => article.slug === slug
-  );
+  const existingArticle = articleRepository.findBySlug(slug);
   if (!existingArticle) {
     throw new NotFoundError(`Article with slug ${slug} does not exist`);
   }

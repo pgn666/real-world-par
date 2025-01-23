@@ -1,6 +1,6 @@
 import { Article } from "./article";
 
-export function inMemoryArticleRepository() {
+export const inMemoryArticleRepository = () => {
   const articles: Record<string, Article> = {};
 
   return {
@@ -19,4 +19,4 @@ export function inMemoryArticleRepository() {
       articles[art.id] = art;
     },
   };
-}
+};
