@@ -12,5 +12,7 @@ export const ArticleInput = z.object({
 });
 // type
 export type ArticleInput = z.infer<typeof ArticleInput>;
-// compile time type
-// const result = ArticleInput.parse({});
+
+
+export const UpdateArticleInput = ArticleInput.partial();
+export type UpdateArticleInput = z.infer<typeof UpdateArticleInput>;

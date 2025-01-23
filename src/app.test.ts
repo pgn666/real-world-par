@@ -93,6 +93,7 @@ describe("Conduit", function () {
           },
           422
       );
+      console.log(failedArticle.body);
 
       assert.deepStrictEqual(failedArticle.body.errors.length, 4);
   });
