@@ -8,3 +8,10 @@ export type Article = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ArticleInput = {
+  body: string;
+  description: string;
+  tagList: Array<string>;
+  title: string;
+};
