@@ -15,3 +15,9 @@ export type ArticleInput = {
   tagList: Array<string>;
   title: string;
 };
+
+export type ArticleRepository = {
+  create: (art: Article) => void;
+  findBySlug: (slug: string) => Article | null;
+  update: (art: Article) => void;
+};

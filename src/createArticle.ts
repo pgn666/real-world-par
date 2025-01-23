@@ -1,11 +1,10 @@
 import slug from "slug";
-import { Article, ArticleInput } from "./article";
-import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
+import { Article, ArticleInput, ArticleRepository } from "./article";
 
 type IdGenerator = () => string;
 
 export function createArticle(
-  articleRepository: ReturnType<typeof inMemoryArticleRepository>,
+  articleRepository: ArticleRepository,
   articleIdGenerator: IdGenerator
 ) {
   const makeSlug = (title: string) => slug(title);

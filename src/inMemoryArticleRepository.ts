@@ -1,13 +1,13 @@
-import { Article } from "./article";
+import { Article, ArticleRepository } from "./article";
 
-export const inMemoryArticleRepository = () => {
+export const inMemoryArticleRepository = (): ArticleRepository => {
   const articles: Record<string, Article> = {};
 
   return {
-    create: (art: Article) => {
+    create: (art) => {
       articles[art.id] = art;
     },
-    findBySlug: (slug: string) => {
+    findBySlug: (slug) => {
       return (
         Object.values(articles)
           .filter((art) => art.slug === slug)
@@ -15,7 +15,7 @@ export const inMemoryArticleRepository = () => {
       );
     },
 
-    update(art: Article) {
+    update(art) {
       articles[art.id] = art;
     },
   };

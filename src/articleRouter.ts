@@ -5,7 +5,6 @@ import omit from "lodash.omit";
 import merge from "lodash.merge";
 import { incrementIdGenerator } from "./incrementIdGenerator";
 import { NotFoundError } from "./NotFoundError";
-import { Article } from "./article";
 import { inMemoryArticleRepository } from "./inMemoryArticleRepository";
 import { createArticle } from "./createArticle";
 
