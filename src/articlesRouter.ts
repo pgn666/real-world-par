@@ -11,8 +11,9 @@ import {ArticleInput, UpdateArticleInput} from "./parseArticleInput";
 import {updateArticle} from "./updateArticle";
 import {sqlArticleRepository} from "./sqlArticleRepository";
 import {createDb} from "./db";
+import {uuidGenerator} from "./uuidGenerator";
 
-const articleIdGenerator = incrementIdGenerator(String);
+const articleIdGenerator = process.env.DATABASE_URL ? uuidGenerator : incrementIdGenerator(String);
 const articleRepository = process.env.DATABASE_URL ?
     sqlArticleRepository(createDb(
     process.env.DATABASE_URL
