@@ -12,10 +12,12 @@ export const createApp = (config: Config) => {
     app.use(express.json());
 
     const db = config.DATABASE_URL ? createDb(config.DATABASE_URL) : null;
-    app.use(createArticlesRouter(articlesCompositionRoot(db)));
+    const articlesModule = articlesCompositionRoot(db);
+    app.use(createArticlesRouter(articlesModule));
+    const clean = () => articlesModule.articleRepository.deleteAll();
 
     app.use(notFoundHandler);
     app.use(errorHandler);
 
-    return app;
+    return {app, clean};
 };
