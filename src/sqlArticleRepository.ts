@@ -5,8 +5,9 @@ import {DB} from "./dbTypes";
 export const sqlArticleRepository = (db: Kysely<DB>): ArticleRepository => {
     return {
         async create(article) {
-            await db.insertInto('article').values(article).execute();
-            if (article.tagList.length > 0) {
+            const {tagList, ...cleanArticle} = article;
+            await db.insertInto('article').values(cleanArticle).execute();
+            if (tagList.length > 0) {
                 await db.insertInto('tags').values(article.tagList.map(tag => ({
                     name: tag,
                     articleId: article.id
@@ -14,9 +15,10 @@ export const sqlArticleRepository = (db: Kysely<DB>): ArticleRepository => {
             }
         },
         async update(article) {
-            await db.updateTable('article as a').set(article).where('a.id', '=', article.id).execute();
+            const {tagList, ...cleanArticle} = article;
+            await db.updateTable('article as a').set(cleanArticle).where('a.id', '=', article.id).execute();
             await db.deleteFrom('tags').where('articleId', '=', article.id).execute();
-            if (article.tagList.length > 0) {
+            if (tagList.length > 0) {
                 await db.insertInto('tags').values(article.tagList.map(tag => ({
                     name: tag,
                     articleId: article.id
