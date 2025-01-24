@@ -5,8 +5,13 @@ import {NotFoundError} from "./NotFoundError";
 import merge from "lodash.merge";
 import {UpdateArticleInput} from "./parseArticleInput";
 
+export type UpdateArticle = (
+    slug: string,
+    articleInput: UpdateArticleInput,
+) => Promise<Article>;
+
 export const updateArticle =
-    (articleRepository: ArticleRepository, clock: Clock) =>
+    (articleRepository: ArticleRepository, clock: Clock): UpdateArticle =>
         async (slug: string, articleInput: UpdateArticleInput) => {
             const existingArticle = await articleRepository.findBySlug(slug);
             if (!existingArticle) {
