@@ -1,7 +1,7 @@
-import {Article, ArticleRepository} from "./article";
+import {Article, ArticleRepository} from "../domain/article";
 import makeSlug from "slug";
-import {Clock} from "../shared/clock";
-import {NotFoundError} from "../error/NotFoundError";
+import {Clock} from "../../shared/clock";
+import {NotFoundError} from "../../error/NotFoundError";
 import merge from "lodash.merge";
 import {UpdateArticleInput} from "./parseArticleInput";
 
