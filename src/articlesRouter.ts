@@ -9,9 +9,14 @@ import {createArticle} from "./createArticle";
 import {clock} from "./clock";
 import {ArticleInput, UpdateArticleInput} from "./parseArticleInput";
 import {updateArticle} from "./updateArticle";
+import {sqlArticleRepository} from "./sqlArticleRepository";
+import {createDb} from "./db";
 
 const articleIdGenerator = incrementIdGenerator(String);
-const articleRepository = inMemoryArticleRepository();
+const articleRepository = process.env.DATABASE_URL ?
+    sqlArticleRepository(createDb(
+    process.env.DATABASE_URL
+)) : inMemoryArticleRepository();
 
 export const articlesRouter = Router();
 
@@ -21,7 +26,7 @@ articlesRouter.post("/api/articles", async (req, res, next) => {
     // TS
     const article = await createArticle(articleRepository, articleIdGenerator, clock)(input);
     // HTTP
-    res.json({ article: omit(article, "id") });
+    res.json({article: omit(article, "id")});
 });
 articlesRouter.put("/api/articles/:slug", async (req, res, next) => {
     // HTTP
@@ -35,7 +40,7 @@ articlesRouter.put("/api/articles/:slug", async (req, res, next) => {
     );
 
     // HTTP
-    res.json({ article: omit(article, "id") });
+    res.json({article: omit(article, "id")});
 });
 articlesRouter.get("/api/articles/:slug", async (req, res, next) => {
     const slug = req.params.slug;
@@ -43,5 +48,5 @@ articlesRouter.get("/api/articles/:slug", async (req, res, next) => {
     if (!existingArticle) {
         throw new NotFoundError(`Article with slug ${slug} does not exist`);
     }
-    res.json({ article: omit(existingArticle, "id") });
+    res.json({article: omit(existingArticle, "id")});
 });
