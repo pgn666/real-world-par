@@ -2,7 +2,7 @@ import {Article, ArticleRepository} from "./article";
 
 
 export const inMemoryArticleRepository = (): ArticleRepository => {
-    const articles: Record<string, Article> = {};
+    let articles: Record<string, Article> = {};
 
     return {
         async create(article) {
@@ -16,6 +16,9 @@ export const inMemoryArticleRepository = (): ArticleRepository => {
                 (article) => article.slug === slug
             );
             return article ?? null;
+        },
+        async deleteAll() {
+            articles = {};
         },
     };
 };
