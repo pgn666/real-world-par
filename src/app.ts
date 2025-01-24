@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import {createArticlesRouter} from "./articlesRouter";
-import {errorHandler, notFoundHandler} from "./errorHandlers";
+import {createArticlesRouter} from "./articles/articlesRouter";
+import {errorHandler, notFoundHandler} from "./error/errorHandlers";
 import {Config} from "./config";
 import {createDb} from "./db";
-import {articlesCompositionRoot} from "./articlesCompositionRoot";
+import {articlesCompositionRoot} from "./articles/articlesCompositionRoot";
 
 export const createApp = (config: Config) => {
     const app = express();
